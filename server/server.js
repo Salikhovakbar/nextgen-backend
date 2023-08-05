@@ -9,6 +9,7 @@ import teachers from '../src/routes/teachers.routes.js'
 import admin from '../src/routes/admin.routes.js'
 import groups from '../src/routes/groups.routes.js'
 import homework from '../src/routes/homework.routes.js'
+import newstudents from '../src/routes/newstudents.routes.js'
 import fileUpload from 'express-fileupload'
 const network = os.networkInterfaces()['Беспроводная сеть'][1].address
 const app = express()
@@ -17,6 +18,7 @@ app.use(express.json())
 app.use(fileUpload())
 app.use(cors("*"))
 app.use(students)
+app.use(newstudents)
 app.use(admin)
 app.use(teachers)
 app.use(groups)

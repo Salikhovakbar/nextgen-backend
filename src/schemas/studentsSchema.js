@@ -1,5 +1,5 @@
 import { Types, Schema, model } from 'mongoose'
-
+import sha256 from 'sha256'
 
 const studentsSchema = new Schema({
     firstname: {
@@ -24,13 +24,9 @@ const studentsSchema = new Schema({
         type: Number,
         required: true
     },
-    gender: {
-        type: String,
-        enum : {
-            values: ['male', 'female'],
-            message: 'Please be natural'
-        },
-        default: 'male'
+    paid: {
+        type: Boolean,
+        default: false
     },
     imgLink: {
         type: String
@@ -42,18 +38,18 @@ const studentsSchema = new Schema({
     password: {
         type: String,
         minLength: [8, 'The password must contain at least 8 words'],
-        required: true
+        default: sha256('12345678')
     },
     telephone: {
         type: String,
         unique: true,
         required: true,
         set: value => {
-            if(value.includes("998")){
-                return value.split("998").join("")
-            }
-            else if(value.includes("+998")){
+            if(value.includes("+998")){
             return value.split("+998").join("")
+            }
+            else if(value.includes("998")){
+                return value.split("998").join("")
             }
             else return value
         }

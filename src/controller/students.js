@@ -7,10 +7,10 @@ export default {
 SIGNUP_STUDENT: async (req, res) => {
     try{
         let { firstname, lastname, age, password, telephone} = req.body
-if(!firstname || !lastname || !age || !password || !telephone) throw new Error("The data is not full")
+if(!firstname || !lastname || !age || !telephone) throw new Error("The data is not full")
 if((await students.get('', {telephone})).length > 0) throw new Error("The user exists!")
 else{
-    req.body.password = sha256(password)
+   if(password) req.body.password = sha256(password)
     if(req.body.telephone.includes('-')){
         req.body.telephone = req.body.telephone.split("-").join("")
     }

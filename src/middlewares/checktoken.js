@@ -33,12 +33,7 @@ const link = path.join('images', firstname + random + '.' + mimetype)
 req.body.imgLink = link
 }
 else {
-    if(req.body.gender == 'female'){
- req.body.imgLink = '/images/girl.jpg'
-    }
-    else {
- req.body.imgLink = '/images/boy.jpg'
-    }
+ req.body.imgLink = '/images/user.png'
 }
 return next()
 }
