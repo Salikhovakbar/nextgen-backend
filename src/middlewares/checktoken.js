@@ -1,0 +1,44 @@
+import path from 'path'
+import jwt from '../utils/jsonwebtoken.js'
+import adminSchema from '../schemas/adminSchema.js'
+import teachers from '../models/teachersModel.js'
+const { VERIFY } = jwt
+export const checkTeacherToken = async (req, res, next) => {
+    try {
+        const { token } = req.headers
+        if(await teachers.get((await VERIFY(token)).id)) return next()
+        else throw new Error("Your token has expired, please go to registration page")
+    } catch (err) {
+     return res.send({error: err.message, status: 404})   
+    }
+}
+export const checkToken = async (req, res, next) => {
+    try {
+        const { token } = req.headers
+        if(await adminSchema.findById((await VERIFY(token)).id)) return next()
+        else throw new Error("Your token has expired, please go to registration page")
+    } catch (err) {
+     return res.send({error: err.message, status: 404})   
+    }
+}
+export const avatar = async (req, res, next) => {
+if(req.files){    
+const file = req.files.avatar
+const { firstname } = req.body
+const random = Math.floor(Math.random() * 9000 + 1000)
+let mimetype = file.name.split('.')
+mimetype = mimetype[mimetype.length - 1]
+const link = path.join('images', firstname + random + '.' + mimetype)
+ file.mv(path.join(process.cwd(), link))
+req.body.imgLink = link
+}
+else {
+    if(req.body.gender == 'female'){
+ req.body.imgLink = '/images/girl.jpg'
+    }
+    else {
+ req.body.imgLink = '/images/boy.jpg'
+    }
+}
+return next()
+}
