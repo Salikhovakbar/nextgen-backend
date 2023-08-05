@@ -4,8 +4,8 @@ import groups from '../schemas/groupsSchema.js'
 class GroupMethods{
     async get(id, filter = {}, options = {}){
 try{
-    if(id) return await groups.findById(id)
-    else return await groups.find(filter, options)
+    if(id) return await groups.findById(id).populate('teacher_id')
+    else return await groups.find(filter, options).populate('teacher_id')
 }catch(err){
     return err.message
 }

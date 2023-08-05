@@ -4,8 +4,8 @@ import homework from '../schemas/homeworkSchema.js'
 class HomeworkMethods{
     async get(id, filter = {}, options = {}){
 try{
-    if(id) return await homework.findById(id)
-    else return await homework.find(filter, options)
+    if(id) return await homework.findById(id).populate('group_id').populate('teacher_id')
+    else return await homework.find(filter, options).populate('group_id').populate('teacher_id')
 }catch(err){
     return err.message
 }

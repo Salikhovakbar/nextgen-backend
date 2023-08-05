@@ -60,11 +60,11 @@ else{
     return res.send({status:200, data:'The user has been updated'})
     }
     else if(await adminSchema.findById((await VERIFY(token)).id)){
-        req.body.password = sha256(password)
-        if(req.body.telephone.includes('-')){
+        if(password) req.body.password = sha256(password)
+        if(telephone && req.body.telephone.includes('-')){
         req.body.telephone = req.body.telephone.split("-").join("")
         }
-        if(req.body.telephone.includes(' ')){
+        if(telephone && req.body.telephone.includes(' ')){
             req.body.telephone = req.body.telephone.split(" ").join("")
         }
         await teachers.put(id, '', req.body)

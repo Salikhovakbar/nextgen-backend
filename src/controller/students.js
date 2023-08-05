@@ -55,22 +55,22 @@ const { id } = req.params
 const { token } = req.headers
 // console.log(await students.get(id))
 if(await students.get(id)){
-if(!firstname && !lastname && !age && !password && !telephone && !level && !group_id) throw new Error("Please make changes")
-else{
-    if(await students.get((await VERIFY(token)).id)){
-        await students.put(id, '', {password: sha256(password)})
-    return res.send({status:200, data:'The user has been updated'})
-    }
-    else if(await adminSchema.findById((await VERIFY(token)).id)){
-        req.body.password = sha256(password)
-        if(req.body.telephone.includes('-')){
+    if(!firstname && !lastname && !age && !password && !telephone && !level && !group_id) throw new Error("Please make changes")
+    else{
+        if(await students.get((await VERIFY(token)).id)){
+            await students.put(id, '', {password: sha256(password)})
+            return res.send({status:200, data:'The user has been updated'})
+        }
+        else if(await adminSchema.findById((await VERIFY(token)).id)){
+        if(password) req.body.password = sha256(password)
+        if(telephone && req.body.telephone.includes('-')){
         req.body.telephone = req.body.telephone.split("-").join("")
         }
-        if(req.body.telephone.includes(' ')){
+        if(telephone && req.body.telephone.includes(' ')){
             req.body.telephone = req.body.telephone.split(" ").join("")
         }
         await students.put(id, '', req.body)
-    return res.send({status:200, data:'The user has been updated'})
+        return res.send({status:200, data:'The user has been updated'})
     }
     else throw new Error("Failed to update the user")
 }
