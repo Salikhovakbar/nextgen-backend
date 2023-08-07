@@ -6,6 +6,13 @@ group_number: {
     required: true,
     unique: true
 },
+day: {
+type: String,
+enum:{
+    values: ['odd', 'even'],
+    message: 'enter either odd or even'
+}
+},
     group_level: {
         type: String,
         set: value => {

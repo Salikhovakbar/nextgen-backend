@@ -13,8 +13,8 @@ else return res.send({status: 200, data: await students.get()})
     },
     POST_STUDENTS: async (req, res) => {
         try{
-const { firstname, lastname, telephone } = req.body
-if(!firstname || !lastname || !telephone) throw new Error("The data is not full")
+const { firstname, lastname,telephone } = req.body
+if(!firstname || !lastname||  !telephone) throw new Error("The data is not full")
 else{
     await students.post(req.body)
     return res.send({status:200, data:'Successful registration'})

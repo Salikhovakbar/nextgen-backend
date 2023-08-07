@@ -12,7 +12,7 @@ try{
     }
     async post(data){
         try{
-await studentsSchema.create(data)
+return await studentsSchema.create(data)
         }catch(err){
     return err.message
         }
