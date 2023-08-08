@@ -23,8 +23,8 @@ return await students.create(data)
         }
         async delete(id, filter={}){
             try{
-                if(id) return await studentsSchema.findByIdAndDelete(id)
-                else return await studentsSchema.deleteOne(filter)
+                if(id) return await students.findByIdAndDelete(id)
+                else return await students.deleteOne(filter)
                         }catch(err){
                             return err.message
                         }

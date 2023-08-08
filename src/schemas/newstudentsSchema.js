@@ -9,7 +9,6 @@ firstname: {
 },
 lastname: {
     type: String,
-    required: [true, 'Please enter your surname'],
     set: value => {
         return value.charAt(0).toUpperCase() + value.slice(1)
     }
@@ -27,10 +26,6 @@ telephone: {
         }
         else return value
     }
-},
-checked: {
-    type: Boolean,
-    default: false
 }
 },
 {
