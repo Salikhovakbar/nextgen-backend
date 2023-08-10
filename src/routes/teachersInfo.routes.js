@@ -4,10 +4,10 @@ import express from 'express'
 const app = express()
 const { TEACHERS_GET, TEACHERS_POST, TEACHERS_PUT, TEACHERS_DELETE } = teachersController
 
-app.get('/teachers', TEACHERS_GET)
-app.get('/teachers/:id', TEACHERS_GET)
-app.post("/teachers", checkToken,avatar,TEACHERS_POST)
-app.put('/teachers/:id', checkToken,avatar,TEACHERS_PUT)
-app.delete('/teachers/:id', TEACHERS_DELETE)
+app.get('/teachers-data', TEACHERS_GET)
+app.get('/teachers-data/:id', TEACHERS_GET)
+app.post("/teachers-data", checkToken,avatar,TEACHERS_POST)
+app.put('/teachers-data/:id', checkToken,avatar,TEACHERS_PUT)
+app.delete('/teachers-data/:id', TEACHERS_DELETE)
 
 export default app

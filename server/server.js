@@ -12,10 +12,12 @@ import homework from '../src/routes/homework.routes.js'
 import newstudents from '../src/routes/newstudents.routes.js'
 import fileUpload from 'express-fileupload'
 import teacherData from '../src/routes/teachersInfo.routes.js'
+import path from 'path'
 const network = os.networkInterfaces()['Беспроводная сеть'][1].address
 const app = express()
 const PORT = process.env.PORT || 3000
 app.use(express.json())
+app.use(express.static(path.join(process.cwd(), 'public')))
 app.use(fileUpload())
 app.use(cors("*"))
 app.use(students)

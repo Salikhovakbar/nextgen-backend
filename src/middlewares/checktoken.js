@@ -3,6 +3,7 @@ import jwt from '../utils/jsonwebtoken.js'
 import adminSchema from '../schemas/adminSchema.js'
 import teachers from '../models/teachersModel.js'
 const { VERIFY } = jwt
+const hosting = 'http://localhost:5000'
 export const checkTeacherToken = async (req, res, next) => {
     try {
         const { token } = req.headers
@@ -38,12 +39,12 @@ const { firstname } = req.body
 const random = Math.floor(Math.random() * 9000 + 1000)
 let mimetype = file.name.split('.')
 mimetype = mimetype[mimetype.length - 1]
-const link = path.join('images', firstname + random + '.' + mimetype)
+const link = '/public' + '/images/' + firstname + random + '.' + mimetype
  file.mv(link)
-req.body.imgLink = link
+req.body.imgLink = hosting + link
 }
 else {
- req.body.imgLink = 'http://localhost:5000/images/user.png'
+ req.body.imgLink = hosting + '/public/images/user.png'
 }
 return next()
 }
