@@ -4,7 +4,7 @@ const infoSchema = new Schema({
     teacher_name: {
         type: String
     },
-    img_link: {
+    imgLink: {
         type: String
     }
 })
