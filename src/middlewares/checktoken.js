@@ -39,11 +39,11 @@ const random = Math.floor(Math.random() * 9000 + 1000)
 let mimetype = file.name.split('.')
 mimetype = mimetype[mimetype.length - 1]
 const link = path.join('images', firstname + random + '.' + mimetype)
- file.mv(path.join(process.cwd(), link))
+ file.mv(link)
 req.body.imgLink = link
 }
 else {
- req.body.imgLink = '/images/user.png'
+ req.body.imgLink = 'http://localhost:5000/images/user.png'
 }
 return next()
 }
