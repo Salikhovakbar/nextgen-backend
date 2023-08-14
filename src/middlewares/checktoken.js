@@ -33,18 +33,33 @@ export const checkAllToken = async (req, res, next) => {
     }
 }
 export const avatar = async (req, res, next) => {
-if(req.files){    
+if(req.method == 'POST'){
+    if(req.files){    
 const file = req.files.avatar
-const { firstname } = req.body
+let { name } = file
 const random = Math.floor(Math.random() * 9000 + 1000)
 let mimetype = file.name.split('.')
+name = file.name.split('.')[0]
 mimetype = mimetype[mimetype.length - 1]
-const link = '/public' + '/images/' + firstname + random + '.' + mimetype
- file.mv(link)
+const link =  '/images/' + name + random + '.' + mimetype
+ file.mv(path.join(process.cwd(), 'public', 'images',name + random + '.' + mimetype))
 req.body.imgLink = hosting + link
 }
 else {
- req.body.imgLink = hosting + '/public/images/user.png'
+ req.body.imgLink = hosting + '/images/user.png'
+}}
+else if(req.method == 'PUT'){
+    if(req.files){    
+        const file = req.files.avatar
+        let { name } = file
+        const random = Math.floor(Math.random() * 9000 + 1000)
+        let mimetype = file.name.split('.')
+        name = file.name.split('.')[0]
+        mimetype = mimetype[mimetype.length - 1]
+        const link =  '/images/' + name + random + '.' + mimetype
+         file.mv(path.join(process.cwd(), 'public', 'images',name + random + '.' + mimetype))
+        req.body.imgLink = hosting + link
+        }   
 }
 return next()
 }

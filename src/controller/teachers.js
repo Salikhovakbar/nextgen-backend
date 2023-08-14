@@ -52,7 +52,8 @@ PUT_TEACHER: async (req, res) => {
 const { firstname, lastname, age, password, telephone, level, group_id } = req.body
 const { id } = req.params
 const { token } = req.headers
-if(await teachers.get(id)){
+const found = await teachers.get(id)
+if(found){
 if(!firstname && !lastname && !age && !password && !telephone && !level && !group_id) throw new Error("Please make changes")
 else{
     if((await teachers.get((await VERIFY(token)).id))){
@@ -67,6 +68,7 @@ else{
         if(telephone && req.body.telephone.includes(' ')){
             req.body.telephone = req.body.telephone.split(" ").join("")
         }
+        if(!(found.imgLink.includes('user.png')) && req.body.imgLink)  fs.unlinkSync(path.join(process.cwd(), 'public', 'images', found.imgLink.split("/")[found.imgLink.split("/").length - 1]))
         await teachers.put(id, '', req.body)
     return res.send({status:200, data:'The user has been updated'})
     }
@@ -81,7 +83,9 @@ else throw new Error('The user does not exist')
 DELETE_TEACHER: async (req, res) => {
     try{
 const { id } = req.params
-if((await teachers.get(id))){
+const found = (await teachers.get(id))
+if(found){
+    if(!(found.imgLink.includes('user.png')))  fs.unlinkSync(path.join(process.cwd(), 'public', 'images', found.imgLink.split("/")[found.imgLink.split("/").length - 1]))
     await teachers.delete(id)
     return res.send({status:200, data: 'The user has been successfully deleted'})
 }

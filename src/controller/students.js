@@ -2,6 +2,8 @@ import sha256 from 'sha256'
 import students from '../models/studentsModel.js'
 import adminSchema from '../schemas/adminSchema.js'
 import jwt from '.././utils/jsonwebtoken.js'
+import path from 'path'
+import fs from 'fs'
 const {SIGN, VERIFY} = jwt
 export default {
 SIGNUP_STUDENT: async (req, res) => {
@@ -54,7 +56,8 @@ const { firstname, lastname, age, password, telephone, level, group_id } = req.b
 const { id } = req.params
 const { token } = req.headers
 // console.log(await students.get(id))
-if(await students.get(id)){
+const found = await students.get(id)
+if(found){
     if(!firstname && !lastname && !age && !password && !telephone && !level && !group_id) throw new Error("Please make changes")
     else{
         if(await students.get((await VERIFY(token)).id)){
@@ -69,6 +72,7 @@ if(await students.get(id)){
         if(telephone && req.body.telephone.includes(' ')){
             req.body.telephone = req.body.telephone.split(" ").join("")
         }
+  if(!(found.imgLink.includes('user.png')) && req.body.imgLink)  fs.unlinkSync(path.join(process.cwd(), 'public', 'images', found.imgLink.split("/")[found.imgLink.split("/").length - 1]))
         await students.put(id, '', req.body)
         return res.send({status:200, data:'The user has been updated'})
     }
@@ -83,7 +87,9 @@ else throw new Error('The user does not exist')
 DELETE_STUDENT: async (req, res) => {
     try{
 const { id } = req.params
-if((await students.get(id))){
+const found = (await students.get(id))
+if(found){
+  if(!(found.imgLink.includes('user.png')))  fs.unlinkSync(path.join(process.cwd(), 'public', 'images', found.imgLink.split("/")[found.imgLink.split("/").length - 1]))
     await students.delete(id)
     return res.send({status:200, data: 'The user has been successfully deleted'})
 }
