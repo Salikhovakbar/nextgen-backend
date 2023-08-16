@@ -13,6 +13,7 @@ else return res.send({status: 200, data: await students.get()})
     },
     POST_STUDENTS: async (req, res) => {
         try{
+            console.log(req.body)
 const { firstname, lastname,telephone } = req.body
 if(!firstname || !telephone) throw new Error("The data is not full")
 else{
