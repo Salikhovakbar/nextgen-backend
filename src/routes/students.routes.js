@@ -8,7 +8,7 @@ const { GETALL_STUDENT,LOGIN_STUDENT,SIGNUP_STUDENT,
 
 app.get('/students', GETALL_STUDENT)
 app.get('/students/:id', GETALL_STUDENT)
-app.post('/students/login', LOGIN_STUDENT)
+app.post('/students-login', LOGIN_STUDENT)
 app.post("/students", checkToken, avatar,SIGNUP_STUDENT)
 app.put('/students/:id', avatar,PUT_STUDENT)
 app.delete('/students/:id', checkToken,DELETE_STUDENT)

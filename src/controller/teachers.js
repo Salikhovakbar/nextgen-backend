@@ -7,7 +7,7 @@ export default {
 SIGNUP_TEACHER: async (req, res) => {
     try{
         let { firstname, lastname, age, password, telephone} = req.body
-if(!firstname || !lastname || !age || !telephone) throw new Error("The data is not full")
+if(!firstname || !lastname || !age  || !telephone) throw new Error("The data is not full")
 if((await teachers.get('', {telephone})).length > 0) throw new Error("The user exists!")
 else{
     if(password) req.body.password = sha256(password)
