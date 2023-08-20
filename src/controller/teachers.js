@@ -30,7 +30,7 @@ let { telephone, password } = req.body
 if(!telephone || !password) throw new Error("The data is not full")
 else{
   const user = await teachers.get('', {telephone: req.body.telephone, password: sha256(req.body.password)})
-  if(user.length > 0) return res.send({status:200, token: SIGN(user[0]._id), route: '/personal_cabinet', data: 'Done'})
+  if(user.length > 0) return res.send({status:200, token: SIGN(user[0]._id), route: '/teacher-cabinet/home', data: 'Done'})
 else throw new Error('The user does not exist')
 }
 }catch(err){
@@ -49,7 +49,7 @@ else return res.send({status:200, data: await teachers.get()})
 },
 PUT_TEACHER: async (req, res) => {
     try{
-const { firstname, lastname, age, password, telephone, level, group_id } = req.body
+const { firstname, lastname, age, password, telephone, imgLink } = req.body
 const { id } = req.params
 const { token } = req.headers
 const found = await teachers.get(id)
@@ -57,7 +57,7 @@ if(found){
 if(!firstname && !lastname && !age && !password && !telephone && !level && !group_id) throw new Error("Please make changes")
 else{
     if((await teachers.get((await VERIFY(token)).id))){
-        await teachers.put(id, '', {password: sha256(password)})
+        await teachers.put(id, '', {password: sha256(password), imgLink})
     return res.send({status:200, data:'The user has been updated'})
     }
     else if(await adminSchema.findById((await VERIFY(token)).id)){
