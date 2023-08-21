@@ -52,16 +52,18 @@ else return res.send({status:200, data: await students.get()})
 },
 PUT_STUDENT: async (req, res) => {
     try{
-const { firstname, lastname, age, password, telephone, level, imgLink,group_id } = req.body
+let { firstname, lastname, age, password, telephone, level, imgLink,group_id } = req.body
 const { id } = req.params
 const { token } = req.headers
 // console.log(await students.get(id))
 const found = await students.get(id)
 if(found){
-    if(!firstname && !lastname && !age && !password && !telephone && !level && !group_id) throw new Error("Please make changes")
+    if(!firstname && !lastname && !age && !password && !telephone && !level && !group_id && !imgLink) throw new Error("Please make changes")
     else{
         if(await students.get((await VERIFY(token)).id)){
-            await students.put(id, '', {password: sha256(password), imgLink})
+        if(password) password = sha256(password)
+    if(!(found.imgLink.includes('user.png')) && req.body.imgLink)  fs.unlinkSync(path.join(process.cwd(), 'public', 'images', found.imgLink.split("/")[found.imgLink.split("/").length - 1]))
+            await students.put(id, '', {password, imgLink})
             return res.send({status:200, data:'The user has been updated'})
         }
         else if(await adminSchema.findById((await VERIFY(token)).id)){
