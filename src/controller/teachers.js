@@ -2,6 +2,8 @@ import sha256 from 'sha256'
 import teachers from '../models/teachersModel.js'
 import adminSchema from '../schemas/adminSchema.js'
 import jwt from '.././utils/jsonwebtoken.js'
+import fs from 'fs'
+import path from 'path'
 const {SIGN, VERIFY} = jwt
 export default {
 SIGNUP_TEACHER: async (req, res) => {
@@ -70,7 +72,7 @@ else{
         if(telephone && req.body.telephone.includes(' ')){
             req.body.telephone = req.body.telephone.split(" ").join("")
         }
-        if(!(found.imgLink.includes('user.png')) && req.body.imgLink)  fs.unlinkSync(path.join(process.cwd(), 'public', 'images', found.imgLink.split("/")[found.imgLink.split("/").length - 1]))
+        if(!(found.imgLink.includes('user.png')) && imgLink)  fs.unlinkSync(path.join(process.cwd(), 'public', 'images', found.imgLink.split("/")[found.imgLink.split("/").length - 1]))
         await teachers.put(id, '', req.body)
     return res.send({status:200, data:'The user has been updated'})
     }
