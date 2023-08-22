@@ -26,7 +26,19 @@ const studentsSchema = new Schema({
     },
     paid: {
         type: Boolean,
-        default: false
+        default: false,
+        enum:{
+            values: [true, false],
+            message: 'Please enter either true or false'
+        }
+    },
+    active: {
+        type: Boolean,
+        default: false,
+        enum:{
+            values: [true, false],
+            message: 'Please enter either true or false'
+        }
     },
     imgLink: {
         type: String
@@ -39,6 +51,10 @@ const studentsSchema = new Schema({
         type: String,
         minLength: [8, 'The password must contain at least 8 words'],
         default: sha256('12345678')
+    },
+    teacher_id: {
+        type: Types.ObjectId,
+        ref: 'teachers'
     },
     telephone: {
         type: String,

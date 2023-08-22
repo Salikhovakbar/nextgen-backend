@@ -4,8 +4,8 @@ import studentsSchema from "../schemas/studentsSchema.js"
 class StudentMethods{
     async get(id, filter = {}, options = {}){
 try{
-    if(id) return await studentsSchema.findById(id).populate('group_id')
-    else return await studentsSchema.find(filter, options).populate('group_id')
+    if(id) return await studentsSchema.findById(id).populate('group_id').populate('teacher_id')
+    else return await studentsSchema.find(filter, options).populate('group_id').populate('teacher_id')
 }catch(err){
     return err.message
 }
