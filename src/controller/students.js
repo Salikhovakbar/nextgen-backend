@@ -52,7 +52,9 @@ GETALL_STUDENT: async (req, res) => {
 for(let student of (await students.get(id))){
     let check = 0
     for(let i in query){
-        if(student[i] === query[i]) check++
+        const info = student[i]
+        if(info == query[i]) check++
+        if(info._id == query[i]) check++
     }
     if(check === Object.keys(query).length) foundStudents.push(student)
 }
