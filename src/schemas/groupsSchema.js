@@ -8,6 +8,10 @@ group_number: {
 },
 day: {
 type: String,
+required: true,
+set: value => {
+return value.toLowerCase()
+},
 enum:{
     values: ['odd', 'even'],
     message: 'enter either odd or even'
