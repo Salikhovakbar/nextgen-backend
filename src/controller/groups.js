@@ -14,7 +14,9 @@ const query = qr.parse(link)
 for(let group of await groups.get()){
     let check = 0
 for(let i in query){
-    if(group[i] == query[i]) check++
+    const info = group[i]
+    if(info == query[i]) check++
+    if(info._id == query[i]) check++ 
 }
 if(check == Object.keys(query).length) foundGroups.push(group)
 }
@@ -30,8 +32,8 @@ else return res.send({status:200, data: await groups.get()})}
     },
 POST_GROUPS: async (req, res) => {
     try{
-const { group_number, teacher_id, group_level, day } = req.body
-if( !group_number ||  !teacher_id ||  !group_level || !day) throw new Error("The data is not full")
+const { group_number, teacher_id, group_level, day, time } = req.body
+if( !group_number ||  !teacher_id ||  !group_level || !day || !time) throw new Error("The data is not full")
 else{
     await groups.post(req.body)
     return res.send({status:200, data: 'The group has been created'})
@@ -43,9 +45,9 @@ else{
 PUT_GROUPS: async (req, res) => {
     try{
 const { id } = req.params
-const { group_number, teacher_id, group_level, day } = req.body
+const { group_number, teacher_id, group_level, day, time } = req.body
 const group = await groups.get(id)
-if(!group_number && !teacher_id && !group_level && !day) throw new Error("Please make changes")
+if(!group_number && !teacher_id && !group_level && !day && !time) throw new Error("Please make changes")
 else if(group){
     await groups.put(id, '', req.body)
     return res.send({status:200, data: 'The group has been updated'})

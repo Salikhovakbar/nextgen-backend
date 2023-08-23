@@ -27,6 +27,10 @@ enum:{
         type: Types.ObjectId,
         ref: 'teachers',
         required: true
+    },
+    time: {
+        type: String,
+        required: true
     }
 },{
     versionKey: false
