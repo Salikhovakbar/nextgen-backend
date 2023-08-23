@@ -4,6 +4,8 @@ import adminSchema from '../schemas/adminSchema.js'
 import jwt from '.././utils/jsonwebtoken.js'
 import fs from 'fs'
 import path from 'path'
+import url from 'url'
+import qs from 'querystring'
 const {SIGN, VERIFY} = jwt
 export default {
 SIGNUP_TEACHER: async (req, res) => {
@@ -42,9 +44,25 @@ else throw new Error('The user does not exist')
 GETALL_TEACHER: async (req, res) => {
     try{
         const {id} = req.params
+        const link = url.parse(req.url).query
+        if(link){
+            const foundStudents = []
+            const query = qs.parse(link)
+            for(let student of await teachers.get()){
+                let check = 0
+                for(let i in query){
+                    const info = student[i]
+                    if(info == query[i])check++
+                    if(info._id == query[i]) check++
+                }
+                if(check == Object.keys(query).length) foundStudents.push(student)
+            }
+            return res.send({status:200, data: foundStudents})
+        }
+        else{
 if(id && (await teachers.get(id))) return res.send({status:200, data: await teachers.get(id)})
 if(id && !(await teachers.get(id))) throw new Error("The teacher does not exist")
-else return res.send({status:200, data: await teachers.get()})
+else return res.send({status:200, data: await teachers.get()})}
 }catch(err){
         return res.send({status:404, error: err.message})
     }
