@@ -32,6 +32,9 @@ const studentsSchema = new Schema({
             message: 'Please enter either true or false'
         }
     },
+    start_date: {
+    type: String
+    },
     active: {
         type: Boolean,
         default: false,
