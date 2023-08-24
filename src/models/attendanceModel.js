@@ -28,7 +28,7 @@ else return await attendanceSchema.updateOne(filter, data)
     async delete(id, filter = {}){
         try{
 if(id) return await attendanceSchema.findByIdAndDelete(id)
-else return await attendanceSchema.deleteOne(filter)
+else return await attendanceSchema.deleteMany(filter)
         }catch(err){
             return err.message
         }

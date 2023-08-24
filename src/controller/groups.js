@@ -1,6 +1,7 @@
 import groups from "../models/groupsModel.js";
 import url from 'url'
 import qr from 'querystring'
+import attendanceMethods from "../models/attendanceModel.js";
 
 export default {
     GET_GROUPS: async (req, res) => {
@@ -35,7 +36,17 @@ POST_GROUPS: async (req, res) => {
 const { group_number, teacher_id, group_level, day, time } = req.body
 if( !group_number ||  !teacher_id ||  !group_level || !day || !time) throw new Error("The data is not full")
 else{
-    await groups.post(req.body)
+     await groups.post(req.body)
+    const groupsAll = await groups.get()
+    const createdGroup = groupsAll[groupsAll.length - 1]
+    await attendanceMethods.post([
+        {group_id: createdGroup._id, teacher_id},{group_id: createdGroup._id, teacher_id},
+        {group_id: createdGroup._id, teacher_id},{group_id: createdGroup._id, teacher_id},
+        {group_id: createdGroup._id, teacher_id},{group_id: createdGroup._id, teacher_id},
+        {group_id: createdGroup._id, teacher_id},{group_id: createdGroup._id, teacher_id},
+        {group_id: createdGroup._id, teacher_id},{group_id: createdGroup._id, teacher_id},
+        {group_id: createdGroup._id, teacher_id},{group_id: createdGroup._id, teacher_id},
+    ])
     return res.send({status:200, data: 'The group has been created'})
 }    
 }catch(err){
@@ -63,6 +74,7 @@ const { id } = req.params
 const group = await groups.get(id)
 if(group){
     await groups.delete(id)
+    await attendanceMethods.delete('', {group_id: id})
 return res.send({status:200, data: 'The group has been deleted'})
 }else throw new Error("The group does not exist")
     }catch(err){

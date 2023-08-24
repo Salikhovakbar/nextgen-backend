@@ -26,7 +26,7 @@ export const checkAllToken = async (req, res, next) => {
     try {
         const { token } = req.headers
         if(await teachers.get((await VERIFY(token)).id)) return next()
-        else if(await teachers.get((await VERIFY(token)).id)) return next()
+        else if(await adminSchema.findById((await VERIFY(token)).id)) return next()
         else throw new Error("Your token has expired, please go to registration page")
     } catch (err) {
      return res.send({error: err.message, status: 404})   

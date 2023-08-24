@@ -8,6 +8,7 @@ import students from '../src/routes/students.routes.js'
 import teachers from '../src/routes/teachers.routes.js'
 import admin from '../src/routes/admin.routes.js'
 import groups from '../src/routes/groups.routes.js'
+import attendance from '../src/routes/attendance.routes.js'
 import homework from '../src/routes/homework.routes.js'
 import newstudents from '../src/routes/newstudents.routes.js'
 import fileUpload from 'express-fileupload'
@@ -27,6 +28,7 @@ app.use(newstudents)
 app.use(admin)
 app.use(teachers)
 app.use(groups)
+app.use(attendance)
 app.use(homework)
 app.use(teacherData)
 app.use(verifyToken)
