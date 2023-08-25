@@ -1,6 +1,7 @@
 import sha256 from 'sha256'
 import students from '../models/studentsModel.js'
 import adminSchema from '../schemas/adminSchema.js'
+import groups from '../models/groupsModel.js'
 import jwt from '.././utils/jsonwebtoken.js'
 import path from 'path'
 import fs from 'fs'
@@ -94,7 +95,10 @@ if(found){
             req.body.telephone = req.body.telephone.split(" ").join("")
         }
   if(!(found.imgLink.includes('user.png')) && req.body.imgLink)  fs.unlinkSync(path.join(process.cwd(), 'public', 'images', found.imgLink.split("/")[found.imgLink.split("/").length - 1]))
-        await students.put(id, '', req.body)
+  if(group_id){
+   req.body.teacher_id = (await groups.get(group_id)).teacher_id._id
+  }      
+  await students.put(id, '', req.body)
         return res.send({status:200, data:'The user has been updated'})
     }
     else throw new Error("Failed to update the user")
