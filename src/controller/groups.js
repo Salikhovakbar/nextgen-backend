@@ -33,9 +33,10 @@ else return res.send({status:200, data: await groups.get()})}
     },
 POST_GROUPS: async (req, res) => {
     try{
-const { group_number, teacher_id, group_level, day, time } = req.body
-if( !group_number ||  !teacher_id ||  !group_level || !day || !time) throw new Error("The data is not full")
+const { teacher_id, group_level, day, time } = req.body
+if(!teacher_id ||  !group_level || !day || !time) throw new Error("The data is not full")
 else{
+    req.body.group_number = (await groups.get()).length > 0 ? (await groups.get())[(await groups.get()).length - 1].group_number + 1 : 1
      await groups.post(req.body)
     const groupsAll = await groups.get()
     const createdGroup = groupsAll[groupsAll.length - 1]

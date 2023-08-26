@@ -10,6 +10,7 @@ let route = ''
 if((await VERIFY(token)).id){
     if(await students.get((await VERIFY(token)).id)) {route = '/student-cabinet'}
     else if(await teachers.get((await VERIFY(token)).id)) {route = '/teacher-cabinet/home'}
+    else throw new Error("The token has expired, please go and login!")
     return res.send({status: 200, id: (await VERIFY(token)).id, route})
 }
 else throw new Error("The token has expired")
