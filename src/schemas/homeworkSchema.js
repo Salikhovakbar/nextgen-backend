@@ -12,7 +12,7 @@ const homeworkSchema = new Schema({
         type: Types.ObjectId,
         ref: 'groups'
     },
-    date: {
+    lesson: {
         type: String
     }
 },

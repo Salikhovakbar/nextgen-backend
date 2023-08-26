@@ -13,6 +13,10 @@ required: true
         type: Types.ObjectId,
         ref: 'groups',
         required: true
+    },
+    month: {
+        type: String,
+        required: true
     }
 },{
     versionKey: false
