@@ -15,6 +15,7 @@ import fileUpload from 'express-fileupload'
 import teacherData from '../src/routes/teachersInfo.routes.js'
 import verifyToken from '../src/routes/verifyToke.routes.js'
 import payments from '../src/routes/payments.routes.js'
+import absenceReason from '../src/routes/absenceReason.routes.js'
 import path from 'path'
 const network = os.networkInterfaces()['Беспроводная сеть'][1].address
 const app = express()
@@ -33,6 +34,7 @@ app.use(homework)
 app.use(teacherData)
 app.use(verifyToken)
 app.use(payments)
+app.use(absenceReason)
 app.listen(PORT, () => {
     console.log(`The server http://${network}:${PORT} is working`)
 })

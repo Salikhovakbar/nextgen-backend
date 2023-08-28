@@ -1,7 +1,7 @@
 import attendance from "../models/attendanceModel.js";
 import url from 'url'
 import qs from 'querystring'
-
+import absenceReason from "../models/absenceReasonModel.js";
 
 export default {
     GET_ATTENDANCE: async (req, res) => {
@@ -52,6 +52,19 @@ else{
                 return res.send({status:200, data:'The attendance has been updated'})
             }
             else throw new Error("Does not exist!")
+        }catch(err){
+            return res.send({status:404, error: err.message})
+        }
+    },
+    DELETE_ATTENDANCE: async (req, res) => {
+        try{
+            const { id } = req.params
+            if(!(await attendance.get(id))) throw new Error("The attendance does not exist!")
+            else{
+                await attendance.delete(id)
+                if(await absenceReason.get('',{attendance_id: id})) await absenceReason.delete('',{attendance_id: id})
+                return res.send({status:200, data: 'The attendance has been deleted'})
+            }
         }catch(err){
             return res.send({status:404, error: err.message})
         }

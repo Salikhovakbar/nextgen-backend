@@ -2,7 +2,7 @@ import groups from "../models/groupsModel.js";
 import url from 'url'
 import qr from 'querystring'
 import attendanceMethods from "../models/attendanceModel.js";
-
+import absenceReason from "../models/absenceReasonModel.js";
 export default {
     GET_GROUPS: async (req, res) => {
         try{
@@ -129,8 +129,9 @@ const { id } = req.params
 const group = await groups.get(id)
 if(group){
     await groups.delete(id)
-    await attendanceMethods.delete('', {group_id: id})
-return res.send({status:200, data: 'The group has been deleted'})
+    if(await attendanceMethods.get('', {group_id: id})) await attendanceMethods.delete('', {group_id: id})
+    if(await absenceReason.get('', {attendance_id: (await attendanceMethods.get('', {group_id: id}))._id})) await absenceReason.delete('', {attendance_id: (await attendanceMethods.get('', {group_id: id}))._id}) 
+    return res.send({status:200, data: 'The group has been deleted'})
 }else throw new Error("The group does not exist")
     }catch(err){
         return res.send({status:404, error: err.message})
