@@ -15,6 +15,12 @@ reading: [
     test: String,
     correct_answer: String
     }
+],
+vocabulary: [
+    {
+        test: String,
+        correct_answer: String
+    }
 ]
 },{
     versionKey: false
