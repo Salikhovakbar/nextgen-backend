@@ -30,8 +30,8 @@ export default {
     } ,
     POST_TESTS: async (req, res) => {
         try{
-            const { level, grammar, reading, vocabulary } = req.body
-            if(!level || !grammar || !reading || !vocabulary) throw new Error("The data is not full!")
+            const { level, grammar, reading, vocabulary, stage_level } = req.body
+            if(!level || !grammar || !reading || !vocabulary || !stage_level) throw new Error("The data is not full!")
             else{
                 await tests.post(req.body)
                 return res.send({status:200, data: 'The test has been added'})
@@ -44,7 +44,7 @@ export default {
         try{
             const { id } = req.params
             const { level, grammar, reading, vocabulary } = req.body
-            if(!level && !grammar && !reading && !vocabulary) throw new Error("Please make changes!")
+            if(!level && !grammar && !reading && !vocabulary && !stage_level) throw new Error("Please make changes!")
             else{
                 if(id && await tests.get(id)){
                     await tests.put(id,'', req.body)

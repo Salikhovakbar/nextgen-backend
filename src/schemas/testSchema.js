@@ -4,6 +4,9 @@ const testSchema = new Schema({
 level:{
     type: String
 },
+stage_level :{
+    type: String
+}
 grammar: [
     {
       test: String,
