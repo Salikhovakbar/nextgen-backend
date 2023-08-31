@@ -3,8 +3,11 @@ import { Types, Schema, model } from 'mongoose'
 const magazineSchema = new Schema({
     students_id: [{
         type: Types.ObjectId,
-        ref: 'students',
-        unique: true
+        ref: 'students'
+    }],
+    done_homework: [{
+        type: Types.ObjectId,
+        ref: 'students'
     }],
     teacher_id: {
 type: String,

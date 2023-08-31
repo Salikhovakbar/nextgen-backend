@@ -6,7 +6,7 @@ level:{
 },
 stage_level :{
     type: String
-}
+},
 grammar: [
     {
       test: String,

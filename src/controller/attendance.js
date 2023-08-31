@@ -32,8 +32,8 @@ else return res.send({status:200, data: await attendance.get()})}
     },
     POST_ATTENDANCE: async (req, res) => {
         try{
-const { group_id, students_id, teacher_id, month} = req.body
-if( !group_id || !students_id || !teacher_id || !month) throw new Error("The data is not full")
+const { group_id, students_id, teacher_id, month, done_homework} = req.body
+if( !group_id || !students_id || !teacher_id || !month || !done_homework) throw new Error("The data is not full")
 else{
     await attendance.post(req.body)
     return res.send({status:200, data: 'Then attendance has been created'})
@@ -45,8 +45,8 @@ else{
     PUT_ATTENDANCE: async (req, res) => {
         try{
             const { id } = req.params
-            const { group_id, students_id, teacher_id, month} = req.body
-            if(!group_id && !students_id && !teacher_id && !month) throw new Error('Please make changes')
+            const { group_id, students_id, teacher_id, month, done_homework} = req.body
+            if(!group_id && !students_id && !teacher_id && !month && !done_homework) throw new Error('Please make changes')
             else if(id && await attendance.get(id)){
                 await attendance.put(id, '', req.body)
                 return res.send({status:200, data:'The attendance has been updated'})
