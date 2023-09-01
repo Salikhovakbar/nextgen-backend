@@ -22,13 +22,25 @@ grammar: [
 reading: [
     {
     test: String,
-    correct_answer: String
-    }
+    correct_answer: {
+        type: String, 
+        set: value => {
+            return value.toLowerCase()
+        }
+      },
+    options: [String]
+}
 ],
 vocabulary: [
     {
         test: String,
-        correct_answer: String
+        correct_answer: {
+            type: String, 
+            set: value => {
+                return value.toLowerCase()
+            }
+          },
+        options: [String]
     }
 ]
 },{
