@@ -10,7 +10,13 @@ stage_level :{
 grammar: [
     {
       test: String,
-      correct_answer: String
+      correct_answer: {
+        type: String, 
+        set: value => {
+            return value.toLowerCase()
+        }
+      },
+      options: [String]
     }
 ],
 reading: [
