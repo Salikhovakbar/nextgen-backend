@@ -19,7 +19,10 @@ grammar: [
             return value.toLowerCase()
         }
       },
-      options: [String]
+      options: [{
+        _id: String,
+        option: String
+    }]
     }
 ],
 reading: [
@@ -34,7 +37,10 @@ reading: [
             return value.toLowerCase()
         }
       },
-    options: [String]
+    options: [{
+        _id: String,
+        option: String
+    }]
 }
 ],
 vocabulary: [
@@ -49,7 +55,10 @@ vocabulary: [
                 return value.toLowerCase()
             }
           },
-        options: [String]
+          options: [{
+            _id: String,
+            option: String
+        }]
     }
 ]
 },{

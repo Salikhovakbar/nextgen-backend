@@ -1,7 +1,7 @@
 import tests from "../models/testModel.js";
 import url from 'url'
 import qs from 'querystring'
-import { v4 as uuidv4 } from 'uuid';
+import changeData from "../utils/changeData.js";
 export default {
     GET_TESTS: async (req, res) => {
         try{
@@ -34,25 +34,9 @@ export default {
             let { level, grammar, reading, vocabulary, stage_level } = req.body
             if(!level || !grammar || !reading || !vocabulary || !stage_level) throw new Error("The data is not full!")
             else{
-                let emptyArr = []
-                req.body.grammar.forEach((e, index) => {
-                e._id = uuidv4()
-                emptyArr.push(e)
-                })
-                req.body.grammar = emptyArr
-                emptyArr = []
-                req.body.reading.forEach((e, index) => {
-                    e._id = uuidv4()
-                    emptyArr.push(e)
-                    })
-                    req.body.reading = emptyArr
-                    emptyArr = []
-                    req.body.vocabulary.forEach((e, index) => {
-                        e._id = uuidv4()
-                        emptyArr.push(e)
-                        })
-                        req.body.vocabulary = emptyArr
-                        emptyArr = []
+                await changeData(req.body.reading)
+            await changeData(req.body.grammar)
+            await changeData(req.body.vocabulary)
                 await tests.post(req.body)
                 return res.send({status:200, data: 'The test has been added'})
             }
